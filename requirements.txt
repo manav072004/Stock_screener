@@ -8,7 +8,6 @@ ta
 numpy
 datetime
 yfinance
-streamlit.components.v1
 bs4
 urllib
 prophet
