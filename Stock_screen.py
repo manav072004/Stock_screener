@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from ta.trend import MACD
 from ta.momentum import StochasticOscillator
-import re
+
 import numpy as np
 import datetime
 import time
@@ -351,8 +351,9 @@ def real_time_price(stock_code):
 
 def check_convert_str_float(df):
     df[0] = float(df[0])
+    string_Val = df[2]
     if isinstance(df[2], str):
-        df[2] = re.sub(",", "", df[2])
+        df[2] = string_Val.replace(",", "")
     df[2] = int(float(df[2]))
     return df
 
