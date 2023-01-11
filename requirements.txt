@@ -9,7 +9,6 @@ numpy
 datetime
 yfinance
 bs4
-urllib
 prophet
 plotly
 matplotlib
