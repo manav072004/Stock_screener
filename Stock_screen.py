@@ -299,7 +299,7 @@ def real_time_price(stock_code):
     temp = int(stocks.info['regularMarketPrice']) - int(stocks.info['previousClose'])
     percent = (float(temp) / float(stocks.info['previousClose'])) * 100
     change = f'{str(temp)} ({percent:.2f}%)'
-
+    price= f'{price:.2f}'
 
     return price, change, volume
 
