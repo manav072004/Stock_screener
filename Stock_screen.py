@@ -292,56 +292,13 @@ def xpath_element(xpath):
     return element
 
 def real_time_price(stock_code):
-    try:
-        url = 'https://finance.yahoo.com/quote/'+stock_code+'?p='+stock_code+'&.tsrc=fin-srch'
-        driver.get(url)
-        
-        xpath ='//*[@id="quote-header-info"]/div[3]/div[1]/div[1]'
-        stock_price = xpath_element(xpath)
-        price=[]
-        change=[]
-
-        if stock_price != []:
-            stock_price_temp = stock_price.text.split()[0]
-            if stock_price_temp.find('+')!=-1:
-                price = stock_price_temp.split('+')[0]
-                try:
-                    change = '+' + stock_price_temp.split('+')[1] + ' ' + stock_price.text.split()[1]
-                except IndexError:
-                    change = ''
-            elif stock_price_temp.find('-')!=-1:
-                price = stock_price_temp.split('-')[0]
-                try:
-                    change = '-' + stock_price_temp.split('-')[1] + ' ' + stock_price.text.split()[1]
-                except IndexError:
-                    change = ''
-            else:
-                price, change = '', ''
-        else:
-            price, change = '', ''
-
-
-        xpath = '//*[@id="quote-summary"]/div[1]'
-        volume_temp = xpath_element(xpath)
-        volume = []
-        if volume_temp != []:
-
-            #volume = volume_temp.text.split()[-4]
-            for i, text in enumerate(volume_temp.text.split()):
-                if text == 'Volume':
-                    volume = volume_temp.text.split()[i+1]
-                    break
-                else:
-                    volume = ''
-        else:
-            volume = ''
-    except:
-        stocks = yf.Ticker(stock_code)
-        price = stocks.info['regularMarketPrice']
-        volume = stocks.info['regularMarketVolume']
-        temp = int(stocks.info['regularMarketPrice']) - int(stocks.info['previousClose'])
-        percent = (float(temp) / float(stocks.info['previousClose'])) * 100
-        change = f'{str(temp)} ({percent:.2f}%)'
+    
+    stocks = yf.Ticker(stock_code)
+    price = stocks.info['regularMarketPrice']
+    volume = stocks.info['regularMarketVolume']
+    temp = int(stocks.info['regularMarketPrice']) - int(stocks.info['previousClose'])
+    percent = (float(temp) / float(stocks.info['previousClose'])) * 100
+    change = f'{str(temp)} ({percent:.2f}%)'
 
 
     return price, change, volume
