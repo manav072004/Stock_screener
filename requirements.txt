@@ -7,7 +7,6 @@ plotly
 ta
 numpy
 datetime
-time
 yfinance
 streamlit.components.v1
 bs4

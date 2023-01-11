@@ -12,7 +12,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from ta.trend import MACD
 from ta.momentum import StochasticOscillator
-
 import numpy as np
 import datetime
 import time
