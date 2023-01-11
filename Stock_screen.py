@@ -366,10 +366,7 @@ def sqmomentum():
     return data
 
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-Path = 'C:\Program Files (x86)\chromedriver.exe'
-driver = webdriver.Chrome(Path, options = chrome_options)
+
 
 today = datetime.date.today()
 year = today.year
