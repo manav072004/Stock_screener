@@ -1,5 +1,6 @@
 requests
-selenium
+seleniumbase
+webdriver-manager
 streamlit
 pandas
 pandas_ta
