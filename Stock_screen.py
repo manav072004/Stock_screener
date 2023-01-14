@@ -410,6 +410,8 @@ def sqmomentum():
     return data
 
 
+
+
 @st.experimental_singleton
 def get_driver():
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
