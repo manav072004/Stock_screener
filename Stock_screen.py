@@ -1,10 +1,5 @@
 import requests
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
-from webdriver_manager.chrome import ChromeDriverManager
+
 import streamlit as st
 import pandas as pd
 import pandas_ta as ta
@@ -411,16 +406,22 @@ def sqmomentum():
     enter_short = short_cond1 and short_cond2
     return data
 
+with st.echo():
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.chrome.service import Service
+    from selenium.webdriver.chrome.options import Options
+    from selenium.common.exceptions import NoSuchElementException
+    from webdriver_manager.chrome import ChromeDriverManager
+    @st.experimental_singleton
+    def get_driver():
+        return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-@st.experimental_singleton
-def get_driver():
-    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
 
-options = Options()
-options.add_argument('--disable-gpu')
-options.add_argument('--headless')
-
-driver = get_driver()
+    driver = get_driver()
 
 
 today = datetime.date.today()
