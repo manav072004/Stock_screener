@@ -25,6 +25,7 @@ from prophet import Prophet
 from prophet.plot import plot_plotly
 from plotly import graph_objs as go
 from matplotlib import pyplot as plt
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 st.set_page_config(layout="wide")
@@ -339,12 +340,13 @@ def real_time_price(stock_code):
             volume = ''
     except:
         stocks = yf.Ticker(stock_code)
-        price = stocks.info['regularMarketPrice']
-        volume = stocks.info['regularMarketVolume']
-        temp = int(stocks.info['regularMarketPrice']) - int(stocks.info['previousClose'])
-        percent = (float(temp) / float(stocks.info['previousClose'])) * 100
+        stval = stocks.info
+        price = stval['regularMarketPrice']
+        volume = stval['regularMarketVolume']
+        temp = int(stval['regularMarketPrice']) - int(stval['previousClose'])
+        percent = (float(temp) / float(stval['previousClose'])) * 100
         change = f'{str(temp)} ({percent:.2f}%)'
-
+        
 
     return price, change, volume
 
@@ -410,8 +412,6 @@ def sqmomentum():
     return data
 
 
-
-
 @st.experimental_singleton
 def get_driver():
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
@@ -419,6 +419,7 @@ def get_driver():
 options = Options()
 options.add_argument('--disable-gpu')
 options.add_argument('--headless')
+
 driver = get_driver()
 
 
