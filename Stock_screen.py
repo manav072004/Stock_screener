@@ -334,13 +334,16 @@ def real_time_price(stock_code):
         else:
             volume = ''
     except:
-        stocks = yf.Ticker(stock_code)
-        stval = stocks.info
-        price = stval['regularMarketPrice']
-        volume = stval['regularMarketVolume']
-        temp = int(stval['regularMarketPrice']) - int(stval['previousClose'])
-        percent = (float(temp) / float(stval['previousClose'])) * 100
-        change = f'{str(temp)} ({percent:.2f}%)'
+        try:
+            stocks = yf.Ticker(stock_code)
+            stval = stocks.info
+            price = stval['regularMarketPrice']
+            volume = stval['regularMarketVolume']
+            temp = int(stval['regularMarketPrice']) - int(stval['previousClose'])
+            percent = (float(temp) / float(stval['previousClose'])) * 100
+            change = f'{str(temp)} ({percent:.2f}%)'
+        except:
+            price, change, volume = '','',''
         
 
     return price, change, volume
@@ -406,22 +409,22 @@ def sqmomentum():
     enter_short = short_cond1 and short_cond2
     return data
 
-with st.echo():
-    from selenium import webdriver
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.chrome.service import Service
-    from selenium.webdriver.chrome.options import Options
-    from selenium.common.exceptions import NoSuchElementException
-    from webdriver_manager.chrome import ChromeDriverManager
-    @st.experimental_singleton
-    def get_driver():
-        return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    options = Options()
-    options.add_argument('--disable-gpu')
-    options.add_argument('--headless')
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
+@st.experimental_singleton
+def get_driver():
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    driver = get_driver()
+options = Options()
+options.add_argument('--disable-gpu')
+options.add_argument('--headless')
+
+driver = get_driver()
 
 
 today = datetime.date.today()
