@@ -523,8 +523,7 @@ with tab1:
             
         vol = []
         price, change, vol = real_time_price(ticker)
-        if price=='':
-            st.stop()
+        
         vol = ' '.join(map(str, [vol]))
         price = ' '.join(map(str, [price]))
         #declare figure
